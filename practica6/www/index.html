@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+
+        <meta http-equiv="Content-Security-Policy" content="default-src 'self'
+              http://localhost/practica6Ajax/phpFiles/index.php
+              http://localhost:8080/practica6Ajax/phpFiles/index.php
+              data: gap: https://ssl.gstatic.com 
+              'self' 'unsafe-inline'; media-src *; 
+              img-src 'self' data: content:;">
+        
+        <meta name="format-detection" content="telephone=no">
+        <meta name="msapplication-tap-highlight" content="no">
+        <script src="js/jquery3.2.1.min.js" type="text/javascript"></script>
+        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
+        <link href="js/bootstrap3.3.7dist/css/bootstrap-theme.css" rel="stylesheet" type="text/css"/>
+        <link href="js/bootstrap3.3.7dist/css/bootstrap-theme.min.css" rel="stylesheet" type="text/css"/>
+        <link href="js/bootstrap3.3.7dist/css/bootstrap.css" rel="stylesheet" type="text/css"/>
+        <link href="js/bootstrap3.3.7dist/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+        <script src="js/bootstrap3.3.7dist/js/bootstrap.min.js" type="text/javascript"></script>
+        <link rel="stylesheet" type="text/css" href="css/index.css"/>
+    </head>
+    <body>
+        <div id="container" class="container-fluid">
+            <div class="row">
+                
+                <div class="col-xs-12">
+                    <div class="panel-group">
+                        <div class="panel panel-primary">
+                            <div class="panel-heading">
+                                Notas
+                            </div>
+                            <div class="panel-body">
+                                <ul id="noteList" class="list-group">
+                                    
+                                </ul> 
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    
+                    <div class="col-xs-12">
+                        <div class="btn-group btn-sm ">
+                            <button id="btnAddNote" type="button" class="btn btn-primary">Add Note</button>
+                            <button type="button" class="btn btn-danger">Delete Note</button>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+            
+            <!-- Creamos un custom dialog box -->
+            <div id="addNoteDialog">
+                <div id="dialogTitle">
+                    Add a note.
+                </div>
+                <div id="dialogBody">
+                    <p>Modify note content.</p>
+                    <input type="text" value=""/>
+                </div>
+                <div id="divBtnConfirm">
+                    <buttton id="btnConfirm" class="btn btn-primary btn-sm">Save</buttton>
+                </div>
+            </div>
+
+
+            <script type="text/javascript" src="cordova.js"></script>
+            <script type="text/javascript" src="js/index.js"></script>
+    </body>
+</html>
