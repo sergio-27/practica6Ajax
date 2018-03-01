@@ -8,7 +8,6 @@ $database = 'practicanotas';
 $conn = mysqli_connect($dbhost, $dbuser, $dbpass, $database) or die("Error");
 
 //echo 'Connected successfully <br>';
-
 $sql = 'select * from notas';
 
 $query = mysqli_query($conn, $sql);

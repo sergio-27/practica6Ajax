@@ -27,10 +27,10 @@ function showInput() {
     //count ++;
 
 }
+var pathStucom = 'http://localhost/practica6Ajax/phpFiles/index.php';
 
 function getNotes() {
 
-    var pathStucom = 'http://localhost/practica6Ajax/phpFiles/index.php';
     var pathHome = 'http://localhost:8080/practica6Ajax/phpFiles/index.php';
 
     $.ajax({
@@ -38,7 +38,6 @@ function getNotes() {
         //sirve para poder realizar consultas entre servidores
         jsonp: 'callback',
         url: pathHome,
-        data: {},
         success: function (data) {
 
             for (var k = 0; k < data.length; k++) {
@@ -46,7 +45,7 @@ function getNotes() {
 
                 content = data[k].noteContent;
 
-                var noteItem = $('<li class="list-group-item" userid="' + data[k].userid + '" noteid="' + data[k].noteid + '">' + content + '</li>');
+                var noteItem = $('<li id="userNote" class="list-group-item" userid="' + data[k].userid + '" noteid="' + data[k].noteid + '">' + content + '</li>');
 
 
                 $("#noteList").append(noteItem);
@@ -58,15 +57,28 @@ function getNotes() {
 //funcion para añadir nota
 function addNote() {
 
-    var text = "";
+    var pathHome = 'http://localhost:8080/practica6Ajax/phpFiles/insertNote.php';
 
     var newText = prompt('Write some text. Then click add to add note.');
 
     if (newText !== null) {
-        var nodoNota = $('<li class="list-group-item" userid="" noteid="">' + newText + '</li>');
-        $("#noteList").append(nodoNota);
-    }
 
+        var nodoNota = $('<li class="list-group-item" userid="" noteid="">' + newText + '</li>');
+
+        $("#noteList").append(nodoNota);
+
+        //consulta ajax para añadir usuario a base de datos
+        $.ajax({
+            url: pathHome,
+            dataType: "jsonp",
+            jsonp: "callback",
+            data: {"noteContent": newText},
+            succes: function (){
+                
+            }
+        });
+
+    }
 
 }
 
