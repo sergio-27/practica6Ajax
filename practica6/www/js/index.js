@@ -14,10 +14,12 @@ app.initialize();
 
 //var count = 0;
 
+var path = "";
+
 function showInput() {
 
     // if (count < 1) {
-    var input = '<input type="text" value="' + $(this).text() + '"/>';
+    var input = '<input id="noteContentInput" type="text" value="' + $(this).text() + '"/>';
 
     $(this).text("");
 
@@ -72,10 +74,7 @@ function addNote() {
             url: pathHome,
             dataType: "jsonp",
             jsonp: "callback",
-            data: {"noteContent": newText},
-            succes: function (){
-                
-            }
+            data: {"noteContent": newText}
         });
 
     }
@@ -86,14 +85,27 @@ function makeSelectable() {
 
 }
 
+var newText = '';
+
 //funcion para detectar cuando se pulsa enter y guardar el texto editado
 function saveTextOnclick(e) {
+    
+    var pathHome = 'http://localhost:8080/practica6Ajax/phpFiles/updateNote.php';
 
-    var newText = '';
     var code = (e.keyCode ? e.keyCode : e.which);
     if (code === 13) { //Enter keycode
         newText = $(this).val();
         //alert(newText);
+        $(this).remove();
+        
+        //obtener id usuario e id nota para pasarlso 
+        $.ajax({
+           url: pathHome,
+           dataType: "jsonp",
+           jsonp: "callback",
+           data: {"noteContent": newText}
+        });
+        
     }
 
 }
