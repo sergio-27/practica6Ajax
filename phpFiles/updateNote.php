@@ -8,8 +8,9 @@ $database = 'practicanotas';
 $conn = mysqli_connect($dbhost, $dbuser, $dbpass, $database) or die("Error");
 
 $noteContentInput = $_REQUEST['noteContent'];
+$noteId = $_REQUEST['noteid'];
 
-$updateQuery = "UPDATE notas SET noteContent = '$noteContentInput' WHERE noteid = 3";
+$updateQuery = "UPDATE notas SET noteContent = '$noteContentInput' WHERE noteid = '$noteId'";
 
 
 if (mysqli_query($conn, $updateQuery)) {

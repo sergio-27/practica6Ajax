@@ -18,12 +18,22 @@ var path = "";
 
 function showInput() {
 
+    //obtenemos el total de inputs para evitar que se  pueda modificar mas de uno a la vez
+    var totalInput = $("#noteList input").length;
+
+    totalInput = parseInt(totalInput);
+
+    if (totalInput < 1) {
+        
+        var input = '<input id="noteContentInput" type="text" value="' + $(this).text() + '"/>';
+
+        $(this).text("");
+
+        $(this).append(input);
+    }
+
     // if (count < 1) {
-    var input = '<input id="noteContentInput" type="text" value="' + $(this).text() + '"/>';
 
-    $(this).text("");
-
-    $(this).append(input);
     //}
 
     //count ++;
@@ -49,8 +59,8 @@ function getNotes() {
 
                 var noteItem = $('<li id="userNote" class="list-group-item" userid="' + data[k].userid + '" noteid="' + data[k].noteid + '">' + content + '</li>');
 
-
-                $("#noteList").append(noteItem);
+                if (content !== "")
+                    $("#noteList").append(noteItem);
             }
         }
     });
@@ -74,7 +84,10 @@ function addNote() {
             url: pathHome,
             dataType: "jsonp",
             jsonp: "callback",
-            data: {"noteContent": newText}
+            data: {"noteContent": newText},
+            succes: function () {
+
+            }
         });
 
     }
@@ -89,7 +102,7 @@ var newText = '';
 
 //funcion para detectar cuando se pulsa enter y guardar el texto editado
 function saveTextOnclick(e) {
-    
+
     var pathHome = 'http://localhost:8080/practica6Ajax/phpFiles/updateNote.php';
 
     var code = (e.keyCode ? e.keyCode : e.which);
@@ -97,16 +110,17 @@ function saveTextOnclick(e) {
         newText = $(this).val();
         //alert(newText);
         $(this).remove();
-        
+
         //obtener id usuario e id nota para pasarlso 
         $.ajax({
-           url: pathHome,
-           dataType: "jsonp",
-           jsonp: "callback",
-           data: {"noteContent": newText}
+            url: pathHome,
+            dataType: "jsonp",
+            jsonp: "callback",
+            data: {"noteContent": newText}
         });
-        
+
     }
+
 
 }
 
