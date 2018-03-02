@@ -15,6 +15,7 @@ app.initialize();
 //var count = 0;
 
 var path = "";
+var oldValue = "";
 
 function showInput() {
 
@@ -25,18 +26,16 @@ function showInput() {
 
     if (totalInput < 1) {
         
+        var deleteBtn = '<button id="deleteBtn" class="btn btn-danger btn-sm">Delete</button>';
         var input = '<input id="noteContentInput" type="text" value="' + $(this).text() + '"/>';
 
-        $(this).text("");
+         //oldValue = $(this).val();
+         
+        //$(this).text("");
 
         $(this).append(input);
+        $(this).append(deleteBtn);
     }
-
-    // if (count < 1) {
-
-    //}
-
-    //count ++;
 
 }
 var pathStucom = 'http://localhost/practica6Ajax/phpFiles/index.php';
@@ -94,8 +93,8 @@ function addNote() {
 
 }
 
-function makeSelectable() {
-
+function deteleFromDatabase() {
+       
 }
 
 var newText = '';
@@ -110,6 +109,7 @@ function saveTextOnclick(e) {
         newText = $(this).val();
         //alert(newText);
         $(this).remove();
+        $("#deleteBtn").remove();
 
         //obtener id usuario e id nota para pasarlso 
         $.ajax({

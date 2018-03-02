@@ -14,23 +14,34 @@ app.initialize();
 
 //var count = 0;
 
+var path = "";
+var oldValue = "";
+
 function showInput() {
 
-    // if (count < 1) {
-    var input = '<input type="text" value="' + $(this).text() + '"/>';
+    //obtenemos el total de inputs para evitar que se  pueda modificar mas de uno a la vez
+    var totalInput = $("#noteList input").length;
 
-    $(this).text("");
+    totalInput = parseInt(totalInput);
 
-    $(this).append(input);
-    //}
+    if (totalInput < 1) {
+        
+        var deleteBtn = '<button id="deleteBtn" class="btn btn-danger btn-sm">Delete</button>';
+        var input = '<input id="noteContentInput" type="text" value="' + $(this).text() + '"/>';
 
-    //count ++;
+         //oldValue = $(this).val();
+         
+        //$(this).text("");
+
+        $(this).append(input);
+        $(this).append(deleteBtn);
+    }
 
 }
+var pathStucom = 'http://localhost/practica6Ajax/phpFiles/index.php';
 
 function getNotes() {
 
-    var pathStucom = 'http://localhost/practica6Ajax/phpFiles/index.php';
     var pathHome = 'http://localhost:8080/practica6Ajax/phpFiles/index.php';
 
     $.ajax({
@@ -38,7 +49,6 @@ function getNotes() {
         //sirve para poder realizar consultas entre servidores
         jsonp: 'callback',
         url: pathHome,
-        data: {},
         success: function (data) {
 
             for (var k = 0; k < data.length; k++) {
@@ -46,10 +56,10 @@ function getNotes() {
 
                 content = data[k].noteContent;
 
-                var noteItem = $('<li class="list-group-item" userid="' + data[k].userid + '" noteid="' + data[k].noteid + '">' + content + '</li>');
+                var noteItem = $('<li id="userNote" class="list-group-item" userid="' + data[k].userid + '" noteid="' + data[k].noteid + '">' + content + '</li>');
 
-
-                $("#noteList").append(noteItem);
+                if (content !== "")
+                    $("#noteList").append(noteItem);
             }
         }
     });
@@ -58,17 +68,28 @@ function getNotes() {
 //funcion para añadir nota
 function addNote() {
 
-    var text = "";
-
-
+    var pathHome = 'http://localhost:8080/practica6Ajax/phpFiles/insertNote.php';
 
     var newText = prompt('Write some text. Then click add to add note.');
 
     if (newText !== null) {
-        var nodoNota = $('<li class="list-group-item" userid="" noteid="">' + newText + '</li>');
-        $("#noteList").append(nodoNota);
-    }
 
+        var nodoNota = $('<li class="list-group-item" userid="" noteid="">' + newText + '</li>');
+
+        $("#noteList").append(nodoNota);
+
+        //consulta ajax para añadir usuario a base de datos
+        $.ajax({
+            url: pathHome,
+            dataType: "jsonp",
+            jsonp: "callback",
+            data: {"noteContent": newText},
+            succes: function () {
+
+            }
+        });
+
+    }
 
 }
 
@@ -76,15 +97,30 @@ function makeSelectable() {
 
 }
 
+var newText = '';
+
 //funcion para detectar cuando se pulsa enter y guardar el texto editado
 function saveTextOnclick(e) {
 
-    var newText = '';
+    var pathHome = 'http://localhost:8080/practica6Ajax/phpFiles/updateNote.php';
+
     var code = (e.keyCode ? e.keyCode : e.which);
     if (code === 13) { //Enter keycode
         newText = $(this).val();
-        alert(newText);
+        //alert(newText);
+        $(this).remove();
+        $("#deleteBtn").remove();
+
+        //obtener id usuario e id nota para pasarlso 
+        $.ajax({
+            url: pathHome,
+            dataType: "jsonp",
+            jsonp: "callback",
+            data: {"noteContent": newText}
+        });
+
     }
+
 
 }
 

@@ -118,6 +118,15 @@ h1 {
     display: none
 }
 
+#noteContentInput{
+    margin-left: 150px;
+}
+
+#deleteBtn{
+    margin-left: 15px;
+    width: 100px;
+}
+
 
 
 
