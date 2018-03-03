@@ -25,12 +25,15 @@ function showInput() {
     totalInput = parseInt(totalInput);
 
     if (totalInput < 1) {
-        
-        var deleteBtn = '<button id="deleteBtn" class="btn btn-danger btn-sm">Delete</button>';
-        var input = '<input id="noteContentInput" type="text" value="' + $(this).text() + '"/>';
 
-         //oldValue = $(this).val();
-         
+        var noteid = $(this).attr("noteid");
+        console.log(noteid);
+
+        var deleteBtn = '<button id="deleteBtn" class="btn btn-danger btn-sm">Delete</button>';
+        var input = '<input id="noteContent" type="text" noteid="' + noteid + '" value="' + $(this).text() + '"/>';
+
+        //oldValue = $(this).val();
+
         //$(this).text("");
 
         $(this).append(input);
@@ -94,7 +97,7 @@ function addNote() {
 }
 
 function deteleFromDatabase() {
-       
+
 }
 
 var newText = '';
@@ -108,16 +111,21 @@ function saveTextOnclick(e) {
     if (code === 13) { //Enter keycode
         newText = $(this).val();
         //alert(newText);
-        $(this).remove();
-        $("#deleteBtn").remove();
+
 
         //obtener id usuario e id nota para pasarlso 
         $.ajax({
             url: pathHome,
             dataType: "jsonp",
             jsonp: "callback",
-            data: {"noteContent": newText}
+            data: {"noteContent": newText},
+            succes: function () {
+
+            }
         });
+
+        $(this).remove();
+        $("#deleteBtn").remove();
 
     }
 
