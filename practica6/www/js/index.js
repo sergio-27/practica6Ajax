@@ -10,6 +10,8 @@ var app = {
         $(document).on('click', '#deleteBtn', deleteFromDatabase);
         $(document).on('click', '#cancelBtn', cancelFunction);
         $("#updateBtn").click(updatePage);
+        $("#loginBtn").click(showContentPanel);
+
     }
 };
 
@@ -20,6 +22,23 @@ app.initialize();
 var path = "";
 var oldValue = "";
 var noteId;
+var loginSuccess = false;
+
+function checkUserLogin() {
+    //comprobar si el login es correcto
+
+    if (loginSuccess) {
+        //si es correcto configuramos el atributo href al valor correcto para que muestre la lista
+        $("#panelTitleHRef").attr("href", "#noteContentPanel");
+        
+        
+    } else {
+        //si el login no es correcto o no esta registrado se muestra alerta y se deja el valor de href tal y como esta
+        $("#panelTitleHRef").attr("href", "");
+        
+    }
+
+}
 
 function showInput() {
 
@@ -51,7 +70,7 @@ function showInput() {
 }
 
 
-function updatePage(){
+function updatePage() {
     location.reload();
 }
 

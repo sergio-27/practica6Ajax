@@ -114,6 +114,11 @@ h1 {
     -webkit-animation:fade 3000ms infinite;
 }
 
+
+#container{
+    margin-top: 20px;
+}
+
 #addNoteDialog{
     display: none
 }
