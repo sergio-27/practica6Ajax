@@ -1,5 +1,6 @@
 <?php
 
+$dbhost = 'localhost';
 $dbuser = 'root';
 $dbpass = '';
 $database = 'practicanotas';
@@ -11,7 +12,7 @@ $noteId = $_REQUEST['noteid'];
 $deleteQuery = "DELETE FROM notas WHERE noteid = '$noteId'";
 
 if (mysqli_query($conn, $deleteQuery)) {
-    echo "Nota actualizada";
+    echo "Nota elimnada";
 } else {
     echo "Error: " . $deleteQuery . "<br>" . mysqli_error($conn);
 }

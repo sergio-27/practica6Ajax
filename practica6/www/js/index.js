@@ -7,7 +7,7 @@ var app = {
         // $('li').click(showInput);
         $('#btnAddNote').click(addNote);
         $(document).on('keypress', 'input', saveTextOnclick);
-        $("#deleteBtn").click();
+        $(document).on('click', '#deleteBtn', deleteFromDatabase);
     }
 };
 
@@ -29,6 +29,7 @@ function showInput() {
     if (totalInput < 1) {
 
         var noteid = $(this).attr("noteid");
+        //guardamos el id de la nota seleccionada para poder eliminar o modificar 
         noteId = noteid;
         console.log(noteid);
 
@@ -99,15 +100,24 @@ function addNote() {
 
 }
 
-function deteleFromDatabase() {
-    var pathHome = 'http://localhost:8080/practica6Ajax/phpFiles/updateNote.php';
+function deleteFromDatabase() {
+    
+    var pathHome = 'http://localhost:8080/practica6Ajax/phpFiles/deleteNote.php';
     
     $.ajax({
         url: pathHome,
         dataType: "jsonp",
         jsonp: "callback",
-        data: {"noteId": 7}
+        data: {"noteid": noteId},
+        succes: function(){
+              alert("Nota eliminada");
+        }
     });
+    
+    //elimnamos el input y el boton
+    $("#noteContent").remove();
+    $(this).remove();
+   
     
 }
 
@@ -135,8 +145,7 @@ function saveTextOnclick(e) {
             }
         });
 
-        $(this).remove();
-        $("#deleteBtn").remove();
+        
 
     }
 
