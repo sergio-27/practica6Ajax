@@ -7,6 +7,7 @@ var app = {
         // $('li').click(showInput);
         $('#btnAddNote').click(addNote);
         $(document).on('keypress', 'input', saveTextOnclick);
+        $("#deleteBtn").click();
     }
 };
 
@@ -16,6 +17,7 @@ app.initialize();
 
 var path = "";
 var oldValue = "";
+var noteId;
 
 function showInput() {
 
@@ -27,6 +29,7 @@ function showInput() {
     if (totalInput < 1) {
 
         var noteid = $(this).attr("noteid");
+        noteId = noteid;
         console.log(noteid);
 
         var deleteBtn = '<button id="deleteBtn" class="btn btn-danger btn-sm">Delete</button>';
@@ -97,7 +100,15 @@ function addNote() {
 }
 
 function deteleFromDatabase() {
-
+    var pathHome = 'http://localhost:8080/practica6Ajax/phpFiles/updateNote.php';
+    
+    $.ajax({
+        url: pathHome,
+        dataType: "jsonp",
+        jsonp: "callback",
+        data: {"noteId": 7}
+    });
+    
 }
 
 var newText = '';
@@ -118,7 +129,7 @@ function saveTextOnclick(e) {
             url: pathHome,
             dataType: "jsonp",
             jsonp: "callback",
-            data: {"noteContent": newText},
+            data: {"noteContent": newText, "noteid": noteId},
             succes: function () {
 
             }
