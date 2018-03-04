@@ -8,6 +8,8 @@ var app = {
         $('#btnAddNote').click(addNote);
         $(document).on('keypress', 'input', saveTextOnclick);
         $(document).on('click', '#deleteBtn', deleteFromDatabase);
+        $(document).on('click', '#cancelBtn', cancelFunction);
+        $("#updateBtn").click(updatePage);
     }
 };
 
@@ -33,6 +35,7 @@ function showInput() {
         noteId = noteid;
         console.log(noteid);
 
+        var cancelBtn = '<button id="cancelBtn" class="btn btn-warning btn-sm">Cancel</button>';
         var deleteBtn = '<button id="deleteBtn" class="btn btn-danger btn-sm">Delete</button>';
         var input = '<input id="noteContent" type="text" noteid="' + noteid + '" value="' + $(this).text() + '"/>';
 
@@ -42,9 +45,23 @@ function showInput() {
 
         $(this).append(input);
         $(this).append(deleteBtn);
+        $(this).append(cancelBtn);
     }
 
 }
+
+
+function updatePage(){
+    location.reload();
+}
+
+function cancelFunction() {
+    $("#noteContent").remove();
+    $("#deleteBtn").remove();
+    $(this).remove();
+}
+
+
 var pathStucom = 'http://localhost/practica6Ajax/phpFiles/index.php';
 
 function getNotes() {
@@ -101,24 +118,26 @@ function addNote() {
 }
 
 function deleteFromDatabase() {
-    
+
     var pathHome = 'http://localhost:8080/practica6Ajax/phpFiles/deleteNote.php';
-    
+
     $.ajax({
         url: pathHome,
         dataType: "jsonp",
         jsonp: "callback",
         data: {"noteid": noteId},
-        succes: function(){
-              alert("Nota eliminada");
+        complete: function () {
+            alert("Nota eliminada");
+            $("#noteList").listview('refresh');
         }
     });
-    
+
     //elimnamos el input y el boton
     $("#noteContent").remove();
     $(this).remove();
-   
-    
+    $("#cancelBtn").remove();
+
+
 }
 
 var newText = '';
@@ -140,12 +159,14 @@ function saveTextOnclick(e) {
             dataType: "jsonp",
             jsonp: "callback",
             data: {"noteContent": newText, "noteid": noteId},
-            succes: function () {
-
+            complete: function () {
+                $("#noteList").listview('refresh');
             }
         });
 
-        
+        $("#noteContent").remove();
+        $("#deleteBtn").remove();
+        $("#cancelBtn").remove();
 
     }
 

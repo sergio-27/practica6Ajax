@@ -118,11 +118,11 @@ h1 {
     display: none
 }
 
-#noteContentInput{
+#noteContent{
     margin-left: 150px;
 }
 
-#deleteBtn{
+#deleteBtn, #cancelBtn{
     margin-left: 15px;
     width: 100px;
 }
