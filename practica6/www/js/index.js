@@ -10,7 +10,11 @@ var app = {
         $(document).on('click', '#deleteBtn', deleteFromDatabase);
         $(document).on('click', '#cancelBtn', cancelFunction);
         $("#updateBtn").click(updatePage);
-        $("#loginBtn").click(showContentPanel);
+        $("#loginBtn").click(checkUserLogin);
+        $("#signUpBtn").click(signUpUser);
+        $("#btnClose").click(function (){
+            $("#signUpDialog").css('display', 'none');
+        });
 
     }
 };
@@ -23,6 +27,8 @@ var path = "";
 var oldValue = "";
 var noteId;
 var loginSuccess = false;
+
+
 
 function checkUserLogin() {
     //comprobar si el login es correcto
@@ -106,6 +112,14 @@ function getNotes() {
             }
         }
     });
+}
+
+//funcion para añadir usuario
+function signUpUser(){
+    $("#signUpDialog").css('display', 'block');
+    
+    
+    
 }
 
 //funcion para añadir nota

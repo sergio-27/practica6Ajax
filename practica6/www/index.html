@@ -24,7 +24,9 @@
     <body>
         <div id="container" class="container-fluid">
             <div class="row">
-                <div class="col-xs-12">
+                <div id="accessForm" class="col-xs-12">
+                    User Name: <input type="text" />
+                    Password: <input type="password"/>
                     <button id="loginBtn" type="button" class="btn btn-primary btn-sm">Login</button>
                     <button id="signUpBtn" type="button" class="btn btn-danger btn-sm">Signup</button>
                 </div>
@@ -38,7 +40,7 @@
                             </div>
                             <div id="noteContentPanel" class="panel-collapse collapse">
                                 <div class="panel-body">
-                                    <ul id="noteList" data-role="listview" class="list-group">
+                                    <ul id="noteList" class="list-group">
 
                                     </ul> 
                                 </div>
@@ -72,7 +74,23 @@
                 </div>
             </div>
 
-
+            <!-- Modal content to signup user -->
+            <div id="signUpDialog" class="modal-content">
+                <div class="modal-header">
+                    <span class="close"></span>
+                    <h4>Fill the gaps:</h4>
+                </div>
+                <div class="modal-body">
+                    Username: <input type="text"/><br>
+                    Password: <input type="password"/><br>
+                    Repeat Password: <input type="password" />
+                </div>
+                <div class="modal-footer">
+                    <button id="btnSave" type="button" class="btn btn-primary">Save</button>
+                    <button id="btnClose" type="button" class="btn btn-default">Close</button>
+                </div>
+            </div> 
+            
             <script type="text/javascript" src="cordova.js"></script>
             <script type="text/javascript" src="js/index.js"></script>
     </body>
