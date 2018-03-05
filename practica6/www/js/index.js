@@ -15,6 +15,7 @@ var app = {
         $("#btnClose").click(function (){
             $("#signUpDialog").css('display', 'none');
         });
+        $("#loginBtn").click(login);
 
     }
 };
@@ -27,6 +28,7 @@ var path = "";
 var oldValue = "";
 var noteId;
 var loginSuccess = false;
+
 
 
 
@@ -98,6 +100,7 @@ function getNotes() {
         //sirve para poder realizar consultas entre servidores
         jsonp: 'callback',
         url: pathHome,
+        data: {"userid": 1},
         success: function (data) {
 
             for (var k = 0; k < data.length; k++) {
@@ -112,6 +115,30 @@ function getNotes() {
             }
         }
     });
+}
+
+
+function login(){
+    var userName = $("#username").val();
+    var pass = $("#password").val();
+    var pathHome = 'http://localhost:8080/practica6Ajax/phpFiles/userLogin.php';
+    
+    console.log(userName + " " + pass);
+    
+
+//si los input tienen texto
+    if (userName.trim() !== "" && pass.trim() !== ""){
+        alert("login");
+        $.ajax({
+            url: pathHome,
+            dataType: "jsonp",
+            jsonp: "callback",
+            data: {"username" : userName, "password" : pass},
+            succes: function(){
+                
+            }
+        });
+    }
 }
 
 //funcion para añadir usuario

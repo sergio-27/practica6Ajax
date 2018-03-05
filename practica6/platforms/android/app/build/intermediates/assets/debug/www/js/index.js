@@ -7,6 +7,15 @@ var app = {
         // $('li').click(showInput);
         $('#btnAddNote').click(addNote);
         $(document).on('keypress', 'input', saveTextOnclick);
+        $(document).on('click', '#deleteBtn', deleteFromDatabase);
+        $(document).on('click', '#cancelBtn', cancelFunction);
+        $("#updateBtn").click(updatePage);
+        $("#loginBtn").click(checkUserLogin);
+        $("#signUpBtn").click(signUpUser);
+        $("#btnClose").click(function (){
+            $("#signUpDialog").css('display', 'none');
+        });
+
     }
 };
 
@@ -16,6 +25,26 @@ app.initialize();
 
 var path = "";
 var oldValue = "";
+var noteId;
+var loginSuccess = false;
+
+
+
+function checkUserLogin() {
+    //comprobar si el login es correcto
+
+    if (loginSuccess) {
+        //si es correcto configuramos el atributo href al valor correcto para que muestre la lista
+        $("#panelTitleHRef").attr("href", "#noteContentPanel");
+        
+        
+    } else {
+        //si el login no es correcto o no esta registrado se muestra alerta y se deja el valor de href tal y como esta
+        $("#panelTitleHRef").attr("href", "");
+        
+    }
+
+}
 
 function showInput() {
 
@@ -25,19 +54,39 @@ function showInput() {
     totalInput = parseInt(totalInput);
 
     if (totalInput < 1) {
-        
-        var deleteBtn = '<button id="deleteBtn" class="btn btn-danger btn-sm">Delete</button>';
-        var input = '<input id="noteContentInput" type="text" value="' + $(this).text() + '"/>';
 
-         //oldValue = $(this).val();
-         
+        var noteid = $(this).attr("noteid");
+        //guardamos el id de la nota seleccionada para poder eliminar o modificar 
+        noteId = noteid;
+        console.log(noteid);
+
+        var cancelBtn = '<button id="cancelBtn" class="btn btn-warning btn-sm">Cancel</button>';
+        var deleteBtn = '<button id="deleteBtn" class="btn btn-danger btn-sm">Delete</button>';
+        var input = '<input id="noteContent" type="text" noteid="' + noteid + '" value="' + $(this).text() + '"/>';
+
+        //oldValue = $(this).val();
+
         //$(this).text("");
 
         $(this).append(input);
         $(this).append(deleteBtn);
+        $(this).append(cancelBtn);
     }
 
 }
+
+
+function updatePage() {
+    location.reload();
+}
+
+function cancelFunction() {
+    $("#noteContent").remove();
+    $("#deleteBtn").remove();
+    $(this).remove();
+}
+
+
 var pathStucom = 'http://localhost/practica6Ajax/phpFiles/index.php';
 
 function getNotes() {
@@ -63,6 +112,14 @@ function getNotes() {
             }
         }
     });
+}
+
+//funcion para añadir usuario
+function signUpUser(){
+    $("#signUpDialog").css('display', 'block');
+    
+    
+    
 }
 
 //funcion para añadir nota
@@ -93,7 +150,26 @@ function addNote() {
 
 }
 
-function makeSelectable() {
+function deleteFromDatabase() {
+
+    var pathHome = 'http://localhost:8080/practica6Ajax/phpFiles/deleteNote.php';
+
+    $.ajax({
+        url: pathHome,
+        dataType: "jsonp",
+        jsonp: "callback",
+        data: {"noteid": noteId},
+        complete: function () {
+            alert("Nota eliminada");
+            $("#noteList").listview('refresh');
+        }
+    });
+
+    //elimnamos el input y el boton
+    $("#noteContent").remove();
+    $(this).remove();
+    $("#cancelBtn").remove();
+
 
 }
 
@@ -108,16 +184,22 @@ function saveTextOnclick(e) {
     if (code === 13) { //Enter keycode
         newText = $(this).val();
         //alert(newText);
-        $(this).remove();
-        $("#deleteBtn").remove();
+
 
         //obtener id usuario e id nota para pasarlso 
         $.ajax({
             url: pathHome,
             dataType: "jsonp",
             jsonp: "callback",
-            data: {"noteContent": newText}
+            data: {"noteContent": newText, "noteid": noteId},
+            complete: function () {
+                $("#noteList").listview('refresh');
+            }
         });
+
+        $("#noteContent").remove();
+        $("#deleteBtn").remove();
+        $("#cancelBtn").remove();
 
     }
 
