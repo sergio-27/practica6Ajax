@@ -6,6 +6,7 @@
         <meta http-equiv="Content-Security-Policy" content="default-src 'self'
               http://localhost/practica6Ajax/phpFiles/index.php
               http://localhost:8080/practica6Ajax/phpFiles/index.php
+              https://stucomspace.000webhostapp.com/userLogin.php
               data: gap: https://ssl.gstatic.com 
               'self' 'unsafe-inline'; media-src *; 
               img-src 'self' data: content:;">
@@ -25,8 +26,8 @@
         <div id="container" class="container-fluid">
             <div class="row">
                 <div id="accessForm" class="col-xs-12">
-                    User Name: <input type="text" />
-                    Password: <input type="password"/>
+                    User Name: <input id="username" type="text" />
+                    Password: <input id="password" type="password"/>
                     <button id="loginBtn" type="button" class="btn btn-primary btn-sm">Login</button>
                     <button id="signUpBtn" type="button" class="btn btn-danger btn-sm">Signup</button>
                 </div>
@@ -35,7 +36,7 @@
                         <div class="panel panel-primary">
                             <div class="panel-heading">
                                 <h5>
-                                    <a id="panelTitleHRef" href="#noteContentPanel" data-toggle="collapse" data-parent="#userNotePanel">Notas</a> 
+                                    <a id="panelTitleHRef" href="" data-toggle="collapse" data-parent="#userNotePanel">Notas</a> 
                                 </h5>
                             </div>
                             <div id="noteContentPanel" class="panel-collapse collapse">
@@ -54,6 +55,7 @@
                         <div class="btn-group btn-sm ">
                             <button id="btnAddNote" type="button" class="btn btn-primary">Add Note</button>
                             <button id="updateBtn" type="button" class="btn btn-info">Update List</button>
+                            <button id="signOutBtn" type="button" class="btn btn-danger">Sign Out</button>
                         </div>
                     </div>
 
@@ -87,12 +89,12 @@
                 <div class="modal-footer">
                     <div id="modalFooterBtn">
                         <button id="btnSave" type="button" class="btn btn-primary">Save</button>
-                    <button id="btnClose" type="button" class="btn btn-default">Close</button>
+                        <button id="btnClose" type="button" class="btn btn-default">Close</button>
                     </div>
-                    
+
                 </div>
             </div> 
-            
+
             <script type="text/javascript" src="cordova.js"></script>
             <script type="text/javascript" src="js/index.js"></script>
     </body>

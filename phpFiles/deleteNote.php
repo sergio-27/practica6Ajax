@@ -1,9 +1,13 @@
 <?php
 
+header('Content-type:application/javascript');
+
 $dbhost = 'localhost';
-$dbuser = 'root';
-$dbpass = '';
-$database = 'practicanotas';
+//$database = 'practicanotas';
+//$dbuser = 'root';
+$dbuser = 'id4965540_root';
+$database = 'id4965540_practicanotas';
+$dbpass = 'ssoo++';
 
 $conn = mysqli_connect($dbhost, $dbuser, $dbpass, $database) or die("Error");
 
@@ -18,6 +22,8 @@ if (mysqli_query($conn, $deleteQuery)) {
 }
 
 $resposta2 = '{"noteid": '.$noteId.'}';
+
+mysqli_close($conn);
 
 if (isset($_GET['callback'])) {
     echo $_GET['callback'] . '(' . $resposta2 . ')';

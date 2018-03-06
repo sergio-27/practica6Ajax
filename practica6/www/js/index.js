@@ -2,7 +2,6 @@
 var app = {
     // Application Constructor
     initialize: function () {
-        getNotes();
         $(document).on('dblclick', 'li', showInput);
         // $('li').click(showInput);
         $('#btnAddNote').click(addNote);
@@ -10,12 +9,12 @@ var app = {
         $(document).on('click', '#deleteBtn', deleteFromDatabase);
         $(document).on('click', '#cancelBtn', cancelFunction);
         $("#updateBtn").click(updatePage);
-        $("#loginBtn").click(checkUserLogin);
+        $("#loginBtn").click(login);
         $("#signUpBtn").click(signUpUser);
-        $("#btnClose").click(function (){
+        $("#btnClose").click(function () {
             $("#signUpDialog").css('display', 'none');
         });
-        $("#loginBtn").click(login);
+
 
     }
 };
@@ -29,24 +28,74 @@ var oldValue = "";
 var noteId;
 var loginSuccess = false;
 
-
-
+var useridLogged;
 
 function checkUserLogin() {
-    //comprobar si el login es correcto
 
+    //comprobar si el login es correcto
     if (loginSuccess) {
         //si es correcto configuramos el atributo href al valor correcto para que muestre la lista
         $("#panelTitleHRef").attr("href", "#noteContentPanel");
-        
-        
+
+
+        getNotes();
+
+        //desplegamos el panel
+        $("#noteContentPanel").attr("class", "panel-collapse collapse in");
+
+        $("#accessForm").remove();
+
+
+
     } else {
         //si el login no es correcto o no esta registrado se muestra alerta y se deja el valor de href tal y como esta
         $("#panelTitleHRef").attr("href", "");
-        
-    }
 
+    }
 }
+
+function login() {
+
+    var userName = $("#username").val();
+    var pass = $("#password").val();
+    
+    var pathHome = 'http://localhost:8080/practica6Ajax/phpFiles/userLogin.php';
+//    var pathStucom = 'http://localhost/practica6Ajax/phpFiles/userLogin.php';
+    var pathStucom = 'https://stucomspace.000webhostapp.com/userLogin.php';
+    //console.log(userName + " " + pass);
+
+
+//si los input tienen texto
+    if (userName.trim() !== "" && pass.trim() !== "") {
+        //alert("login");
+        $.ajax({
+            url: pathStucom,
+            dataType: "jsonp",
+            jsonp: "callback",
+            data: {"username": userName, "password": pass},
+            complete: function (data) {
+
+
+                //si es null la contraseña no es correcta  o el usuario no es correcto
+                if (data.responseJSON === null) {
+                    alert("El usuario o contrasenya proporcionados no son correctos");
+                } else {
+                    //obtenemos del parametro data la respuesta json que emitimos en el php
+                    console.log(data.responseJSON.userid);
+                    useridLogged = data.responseJSON.userid;
+                    loginSuccess = true;
+                    //alert("Sesion iniciada");
+
+                }
+
+                checkUserLogin();
+
+            }
+        });
+
+    }
+}
+
 
 function showInput() {
 
@@ -79,7 +128,8 @@ function showInput() {
 
 
 function updatePage() {
-    location.reload();
+    //utilizamos la funcion get notes para actualizar la lista
+   getNotes();
 }
 
 function cancelFunction() {
@@ -89,19 +139,25 @@ function cancelFunction() {
 }
 
 
-var pathStucom = 'http://localhost/practica6Ajax/phpFiles/index.php';
+
 
 function getNotes() {
 
     var pathHome = 'http://localhost:8080/practica6Ajax/phpFiles/index.php';
-
+    //var pathStucom = 'http://localhost/practica6Ajax/phpFiles/index.php';
+    var pathStucom = 'https://stucomspace.000webhostapp.com/index.php';
+    
+    //vaciamos la lista antes de obtener de nuevo las notas
+    $("#noteList").empty();
     $.ajax({
         dataType: 'jsonp',
         //sirve para poder realizar consultas entre servidores
         jsonp: 'callback',
-        url: pathHome,
-        data: {"userid": 1},
+        url: pathStucom,
+        data: {"userid": useridLogged},
         success: function (data) {
+
+            console.log(data);
 
             for (var k = 0; k < data.length; k++) {
                 var content = "";
@@ -117,61 +173,49 @@ function getNotes() {
     });
 }
 
-
-function login(){
-    var userName = $("#username").val();
-    var pass = $("#password").val();
-    var pathHome = 'http://localhost:8080/practica6Ajax/phpFiles/userLogin.php';
-    
-    console.log(userName + " " + pass);
-    
-
-//si los input tienen texto
-    if (userName.trim() !== "" && pass.trim() !== ""){
-        alert("login");
-        $.ajax({
-            url: pathHome,
-            dataType: "jsonp",
-            jsonp: "callback",
-            data: {"username" : userName, "password" : pass},
-            succes: function(){
-                
-            }
-        });
-    }
-}
-
 //funcion para añadir usuario
-function signUpUser(){
+function signUpUser() {
     $("#signUpDialog").css('display', 'block');
-    
-    
-    
+
+
 }
 
 //funcion para añadir nota
 function addNote() {
 
     var pathHome = 'http://localhost:8080/practica6Ajax/phpFiles/insertNote.php';
+    //var pathStucom = 'http://localhost/practica6Ajax/phpFiles/insertNote.php';
+    var pathStucom = 'https://stucomspace.000webhostapp.com/insertNote.php';
+    
+    var noteid;
 
     var newText = prompt('Write some text. Then click add to add note.');
 
     if (newText !== null) {
 
-        var nodoNota = $('<li class="list-group-item" userid="" noteid="">' + newText + '</li>');
-
-        $("#noteList").append(nodoNota);
-
         //consulta ajax para añadir usuario a base de datos
         $.ajax({
-            url: pathHome,
             dataType: "jsonp",
             jsonp: "callback",
-            data: {"noteContent": newText},
-            succes: function () {
+            url: pathStucom,
+            data: {"noteContent": newText, "userid": useridLogged},
+            complete: function (data) {
+
+                console.log(data.responseJSON);
+
+                for (var k = 0; k < data.length; k++) {
+                    noteid = data[k].noteid;
+                    console.log(noteid);
+                }
+
+                var nodoNota = $('<li id="userNote" class="list-group-item" userid="' + useridLogged + '" noteid="' + noteid + '">' + newText + '</li>');
+
+                $("#noteList").append(nodoNota);
 
             }
         });
+
+
 
     }
 
@@ -180,9 +224,12 @@ function addNote() {
 function deleteFromDatabase() {
 
     var pathHome = 'http://localhost:8080/practica6Ajax/phpFiles/deleteNote.php';
+    //var pathStucom = 'http://localhost/practica6Ajax/phpFiles/deleteNote.php';
+    var pathStucom = 'https://stucomspace.000webhostapp.com/deleteLogin.php';
+    
 
     $.ajax({
-        url: pathHome,
+        url: pathStucom,
         dataType: "jsonp",
         jsonp: "callback",
         data: {"noteid": noteId},
@@ -206,6 +253,8 @@ var newText = '';
 function saveTextOnclick(e) {
 
     var pathHome = 'http://localhost:8080/practica6Ajax/phpFiles/updateNote.php';
+    var pathStucom = 'http://localhost/practica6Ajax/phpFiles/updateNote.php';
+    //var pathStucom = 'https://stucomspace.000webhostapp.com/updateNote.php';
 
     var code = (e.keyCode ? e.keyCode : e.which);
     if (code === 13) { //Enter keycode
@@ -215,7 +264,7 @@ function saveTextOnclick(e) {
 
         //obtener id usuario e id nota para pasarlso 
         $.ajax({
-            url: pathHome,
+            url: pathStucom,
             dataType: "jsonp",
             jsonp: "callback",
             data: {"noteContent": newText, "noteid": noteId},
@@ -227,6 +276,7 @@ function saveTextOnclick(e) {
         $("#noteContent").remove();
         $("#deleteBtn").remove();
         $("#cancelBtn").remove();
+        alert("Press UPLOAD LIST to commit changes.");
 
     }
 

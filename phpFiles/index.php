@@ -1,19 +1,26 @@
 <?php
 
+header('Content-type:application/javascript');
+
 $dbhost = 'localhost';
-$dbuser = 'root';
-$dbpass = '';
-$database = 'practicanotas';
+//$database = 'practicanotas';
+//$dbuser = 'root';
+$dbuser = 'id4965540_root';
+$database = 'id4965540_practicanotas';
+$dbpass = 'ssoo++';
 
 $conn = mysqli_connect($dbhost, $dbuser, $dbpass, $database) or die("Error");
 
+$userid = $_REQUEST['userid'];
+
 //echo 'Connected successfully <br>';
-$sql = 'select * from notas';
+$sql = "select * from notas where userid='$userid'";
 
 $query = mysqli_query($conn, $sql);
 $emparray = array();
 
 while ($row = mysqli_fetch_assoc($query)) {
+    
     $emparray[] = $row;
 }
 

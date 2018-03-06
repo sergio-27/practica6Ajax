@@ -1,9 +1,13 @@
 <?php
 
+header('Content-type:application/javascript');
+
 $dbhost = 'localhost';
-$dbuser = 'root';
-$dbpass = '';
-$database = 'practicanotas';
+//$database = 'practicanotas';
+//$dbuser = 'root';
+$dbuser = 'id4965540_root';
+$database = 'id4965540_practicanotas';
+$dbpass = 'ssoo++';
 
 $conn = mysqli_connect($dbhost, $dbuser, $dbpass, $database) or die("Error");
 
@@ -18,25 +22,32 @@ $maxId = $row[0];
 
 $newId = $maxId + 1;
 
+$userid = $_REQUEST['userid'];
+
 //obtenemos los valores del notecontent
 $noteContent = $_REQUEST['noteContent'];
 
-$resposta2 = json_encode($noteContent);
+//$resposta2 = json_encode($noteContent);
 
 //consulta para insertar nota
-$insertNoteQuery = "INSERT INTO notas (noteid, noteContent, userid, noteTitle) VALUES ('$newId', '$noteContent', 4, 'hello')";
+$insertNoteQuery = "INSERT INTO notas (noteid, noteContent, userid, noteTitle) VALUES ('$newId', '$noteContent', '$userid', 'hello')";
 
 //ejecutamos la consulta
 //mysqli_query($conn, $insertNoteQuery);
 
 
-if (mysqli_query($conn, $insertNoteQuery)) {
-    echo "New record created successfully ";
-} else {
+if (!mysqli_query($conn, $insertNoteQuery)) {
     echo "Error: " . $insertNoteQuery . "<br>" . mysqli_error($conn);
 }
 
-$resposta2 = '{"noteContent": ' . $noteContent . '}';
+$resposta2 = '[{"noteid" : "' . $newId . '", "noteContent" : "' . $noteContent . '" , "userid" : "' . $userid . '", "noteTitle" : "hello"}]';
+
+
+$resposta = json_encode($resposta2);
+
+
+mysqli_free_result($maxQuery);
+mysqli_close($conn);
 
 if (isset($_GET['callback'])) {
     echo $_GET['callback'] . '(' . $resposta2 . ')';
