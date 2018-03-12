@@ -9,9 +9,9 @@
               https://stucomspace.000webhostapp.com/userLogin.php
               https://stucomspace.000webhostapp.com/index.php
               https://stucomspace.000webhostapp.com/insertNote.php
-              https://stucomspace.000webhostapp.com/deleteLogin.php
+              https://stucomspace.000webhostapp.com/deleteNote.php
               https://stucomspace.000webhostapp.com/updateNote.php
-              
+              https://stucomspace.000webhostapp.com/insertUser.php
               data: gap: https://ssl.gstatic.com 
               'self' 'unsafe-inline'; media-src *; 
               img-src 'self' data: content:;">
@@ -60,7 +60,6 @@
                         <div class="btn-group btn-sm ">
                             <button id="btnAddNote" type="button" class="btn btn-primary">Add Note</button>
                             <button id="updateBtn" type="button" class="btn btn-info">Update List</button>
-                            <button id="signOutBtn" type="button" class="btn btn-danger">Sign Out</button>
                         </div>
                     </div>
 
@@ -87,9 +86,9 @@
                     <h4>Fill the gaps:</h4>
                 </div>
                 <div class="modal-body">
-                    Username: <input type="text"/><br>
-                    Password: <input type="password"/><br>
-                    Repeat Password: <input type="password" />
+                    Username: <input id="usernameSignUp" type="text" value=""/><br>
+                    Password: <input id="passSign1" type="password" value="" /><br>
+                    Repeat Password: <input id="passSign2" type="password" value="" />
                 </div>
                 <div class="modal-footer">
                     <div id="modalFooterBtn">

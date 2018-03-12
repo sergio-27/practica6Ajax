@@ -58,6 +58,7 @@ function login() {
 
     var userName = $("#username").val();
     var pass = $("#password").val();
+    
     var pathHome = 'http://localhost:8080/practica6Ajax/phpFiles/userLogin.php';
 //    var pathStucom = 'http://localhost/practica6Ajax/phpFiles/userLogin.php';
     var pathStucom = 'https://stucomspace.000webhostapp.com/userLogin.php';
@@ -143,7 +144,8 @@ function cancelFunction() {
 function getNotes() {
 
     var pathHome = 'http://localhost:8080/practica6Ajax/phpFiles/index.php';
-    var pathStucom = 'http://localhost/practica6Ajax/phpFiles/index.php';
+    //var pathStucom = 'http://localhost/practica6Ajax/phpFiles/index.php';
+    var pathStucom = 'https://stucomspace.000webhostapp.com/index.php';
     
     //vaciamos la lista antes de obtener de nuevo las notas
     $("#noteList").empty();
@@ -182,7 +184,8 @@ function signUpUser() {
 function addNote() {
 
     var pathHome = 'http://localhost:8080/practica6Ajax/phpFiles/insertNote.php';
-    var pathStucom = 'http://localhost/practica6Ajax/phpFiles/insertNote.php';
+    //var pathStucom = 'http://localhost/practica6Ajax/phpFiles/insertNote.php';
+    var pathStucom = 'https://stucomspace.000webhostapp.com/insertNote.php';
     
     var noteid;
 
@@ -221,7 +224,8 @@ function addNote() {
 function deleteFromDatabase() {
 
     var pathHome = 'http://localhost:8080/practica6Ajax/phpFiles/deleteNote.php';
-    var pathStucom = 'http://localhost/practica6Ajax/phpFiles/deleteNote.php';
+    //var pathStucom = 'http://localhost/practica6Ajax/phpFiles/deleteNote.php';
+    var pathStucom = 'https://stucomspace.000webhostapp.com/deleteNote.php';
     
 
     $.ajax({
@@ -250,6 +254,7 @@ function saveTextOnclick(e) {
 
     var pathHome = 'http://localhost:8080/practica6Ajax/phpFiles/updateNote.php';
     var pathStucom = 'http://localhost/practica6Ajax/phpFiles/updateNote.php';
+    //var pathStucom = 'https://stucomspace.000webhostapp.com/updateNote.php';
 
     var code = (e.keyCode ? e.keyCode : e.which);
     if (code === 13) { //Enter keycode
