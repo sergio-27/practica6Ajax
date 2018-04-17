@@ -19,27 +19,61 @@
 -->
 <html>
     <head>
-     
-        <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *; img-src 'self' data: content:;">
+
+        <meta http-equiv="Content-Security-Policy"
+              content=" style-src 'self' 'unsafe-inline'; media-src *; img-src 'self' data: content:;">
         <meta name="format-detection" content="telephone=no">
         <meta name="msapplication-tap-highlight" content="no">
         <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
         <link rel="stylesheet" type="text/css" href="css/index.css">
+        <script src="js/jquery3.2.1.min.js" type="text/javascript"></script>
         <link href="js/bootstrap3.3.7dist/css/bootstrap-theme.css" rel="stylesheet" type="text/css"/>
         <link href="js/bootstrap3.3.7dist/css/bootstrap-theme.min.css" rel="stylesheet" type="text/css"/>
         <link href="js/bootstrap3.3.7dist/css/bootstrap.css" rel="stylesheet" type="text/css"/>
         <link href="js/bootstrap3.3.7dist/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
-        <script src="js/bootstrap3.3.7dist/js/bootstrap.min.js" type="text/javascript"></script>
+
     </head>
     <body>
         <div class="container-fluid">
             <div class="row">
                 <div id="accesForm" class="col-xs-12">
-                    <input type="text" placeholder="Email"/>
+                    <input id="emailBox" type="text" class="form-control" placeholder="Email"/>
+                    <input id="passBox" type="password" class="form-control" placeholder="Password"/>
+                    <input id="passBox2" type="password" class="form-control" placeholder="Password"/>
+                    <input id="logBtn" type="button" class="btn btn-block btn-primary btn-sm" value="Log In"/>
+                    <input id="signBtn" type="button" class="btn btn-block btn-warning btn-sm" value="Sign Up"/>
+                </div>
+                <div id="main" class="col-xs-12">
+                    <nav class="navbar navbar-inverse">
+                        <div class="container-fluid">
+                            <div class="navbar-header">
+                                <a class="navbar-brand">Practica 7 SGE</a>
+                            </div>
+                            <ul class="nav navbar-nav">
+                                <li class="active"><a id="ratePhoto" href="#" >Rate photos</a></li>
+                                <li><a id="uploadPhoto" href="#">Upload photo</a></li>
+                                <li><a id="seePhotos" href="#">See photos</a></li>
+                            </ul>
+                            <ul class="nav navbar-nav navbar-right">
+                                <li><a href="#"><span class="glyphicon glyphicon-log-out"></span> Log out</a></li>
+                            </ul>
+                        </div>
+                    </nav> 
+                </div>
+                <div id="ratePhotoDiv">
+                        <
+                </div>
+                <div id="uploadPhotoDiv">
+                    
+                </div>
+                <div id="seePhotoDiv">
+                    
                 </div>
             </div>
-            
+
         </div>
+
+        <script src="js/bootstrap3.3.7dist/js/bootstrap.min.js" type="text/javascript"></script>
         <script type="text/javascript" src="cordova.js"></script>
         <script type="text/javascript" src="js/index.js"></script>
     </body>

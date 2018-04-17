@@ -9,7 +9,23 @@
   "installed_plugins": {
     "cordova-plugin-whitelist": {
       "PACKAGE_NAME": "com.hawkins.stucom"
+    },
+    "cordova-plugin-camera": {
+      "PACKAGE_NAME": "com.hawkins.stucom"
+    },
+    "cordova-plugin-file": {
+      "PACKAGE_NAME": "com.hawkins.stucom"
+    },
+    "cordova-plugin-file-transfer": {
+      "PACKAGE_NAME": "com.hawkins.stucom"
+    },
+    "cordova-plugin-x-socialsharing": {
+      "PACKAGE_NAME": "com.hawkins.stucom"
     }
   },
-  "dependent_plugins": {}
+  "dependent_plugins": {
+    "es6-promise-plugin": {
+      "PACKAGE_NAME": "com.hawkins.stucom"
+    }
+  }
 }
