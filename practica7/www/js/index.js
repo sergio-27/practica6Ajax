@@ -11,6 +11,7 @@ var app = {
         $("#uploadPhotoDiv").hide();
         $("#seePhotoDiv").hide();
         
+        
 
     }
 
@@ -46,6 +47,8 @@ function getCredentials() {
         success: function (data) {
             if(data !== null){
                 $("#accesForm").hide(true);
+                showImage();
+                $("#ratePhotoDiv").show();
                 
                 alert("Bienvenido");
                 //mostramos la pantalla principal
@@ -59,6 +62,13 @@ function getCredentials() {
             
         }
     });
+    
+    function showImage(){
+        var tagImg = $("<img />");
+        tagImg.attr("src", "http://localhost/practicasAjax/practica7/www/img/68b9169600.jpg");
+        
+        $("#divPhoto").append(tagImg);
+    }
 
 }
 
