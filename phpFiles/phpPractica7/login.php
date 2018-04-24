@@ -1,8 +1,8 @@
 <?php
 header('Content-type:application/javascript');
 
-$dbhost = 'localhost';
-//$dbuser = 'id4965540_root';
+//$dbhost = 'localhost';
+$dbuser = 'id4965540_root';
 $dbuser = 'root';
 $dbpass = 'ssoo++';
 

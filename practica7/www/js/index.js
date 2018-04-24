@@ -11,16 +11,34 @@ var app = {
         $("#uploadPhotoDiv").hide();
         $("#seePhotoDiv").hide();
         
+         $("#ratePhoto").click(hideSectionsOnRate);
+        $("#uploadPhoto").click();
+        $("#seePhoto").click();        
         
 
     }
 
 };
 
+var urlWebHost = "https://stucomspace.000webhostapp.com/PracticaCamara/login.php";
+var urlStucom = "http://localhost/practicasAjax/phpFiles/phpPractica7/login.php";
+
 //funciones de los click
 function OnDevReady() {
 
 }
+
+function hideSectionsOnRate(){
+    if ($("#uploadPhotoDiv").is(":visible")){
+        $("#uploadPhotoDiv").hide();
+    }
+    
+     if ($("#seePhotoDiv").is(":visible")){
+        $("#seePhotoDiv").hide();
+    }
+}
+
+
 
 function showField(){
     $("#signBtn").show();
@@ -33,10 +51,9 @@ function getCredentials() {
     
     //console.log(email);
 
-    var path = 'http://localhost/practicasAjax/phpFiles/phpPractica7/login.php';
-
+   
     $.ajax({
-        url: path,
+        url: urlWebHost,
         dataType: "jsonp",
         jsonp: "callback",
         data: {"email": email, "password": pass},
